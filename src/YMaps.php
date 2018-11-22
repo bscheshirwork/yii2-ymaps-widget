@@ -5,6 +5,7 @@ namespace bscheshirwork\ymaps;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\web\View;
 
 /**
  * Class YMaps
@@ -73,6 +74,35 @@ class YMaps extends Widget
     ];
 
     /**
+     * @var array|string the state for the yandex map object.
+     * Please refer to the corresponding Web page for possible options.
+     * @see https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/
+     * We can pass php array ['key' => 'value'] to convert it into js object "{key:value}"
+     * We can pass string value with pure json "{key:value}" (like a manual).
+     */
+    public $mapState = [];
+
+    /**
+     * @var array|string the options for the yandex map object.
+     * Please refer to the corresponding Web page for possible options.
+     * @see https://tech.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Map-docpage/
+     * We can pass php array ['key' => 'value'] to convert it into js object "{key:value}"
+     * We can pass string value with pure json "{key:value}" (like a manual).
+     */
+    public $mapOptions = [];
+
+    /**
+     * Registers a specific js vars `mapState` and `mapOptions`
+     */
+    protected function registerJsVars()
+    {
+        $mapState = empty($this->mapState) ? '{}' : (is_array($this->mapState) ? Json::htmlEncode($this->mapState) : $this->mapState);
+        $mapOptions = empty($this->mapOptions) ? '{}' : (is_array($this->mapOptions) ? Json::htmlEncode($this->mapOptions) : $this->mapOptions);
+        $js = "var mapState = $mapState, mapOptions = $mapOptions;";
+        $this->getView()->registerJs($js, View::POS_HEAD);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function init()
@@ -81,6 +111,7 @@ class YMaps extends Widget
         $this->apiParams['lang'] = $this->apiParams['lang'] ?? Yii::$app->language;
         $url = $this->apiUri . '/' . $this->apiVersion . '/?' . http_build_query($this->apiParams);
         Yii::$app->view->registerJsFile($url);
+        $this->registerJsVars();
     }
 
     /**
