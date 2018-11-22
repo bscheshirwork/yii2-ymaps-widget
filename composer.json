@@ -1,0 +1,34 @@
+{
+  "name": "bscheshirwork/yii2-ymaps-widget",
+  "description": "Widget for include yandex maps",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "ymaps",
+    "yandex maps"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "BSCheshir",
+      "email": "bscheshir.work@gmail.com"
+    }
+  ],
+  "require": {
+    "yiisoft/yii2": ">=2.0.15"
+  },
+  "autoload": {
+    "psr-4": {
+      "bscheshirwork\\ymaps\\": "src"
+    }
+  },
+  "extra": {
+    "bootstrap": "bscheshirwork\\ymaps\\messages\\Bootstrap"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
