@@ -1,6 +1,6 @@
 <?php
 
-namespace bscheshirwork\nifty\messages;
+namespace bscheshirwork\ymaps\messages;
 
 use yii\base\BootstrapInterface;
 use yii\base\Application;

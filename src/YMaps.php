@@ -78,7 +78,7 @@ class YMaps extends Widget
     public function init()
     {
         parent::init();
-        $this->apiParams['language'] = $this->apiParams['language'] ?? Yii::$app->language;
+        $this->apiParams['lang'] = $this->apiParams['lang'] ?? Yii::$app->language;
         $url = $this->apiUri . '/' . $this->apiVersion . '/?' . http_build_query($this->apiParams);
         Yii::$app->view->registerJsFile($url);
     }
