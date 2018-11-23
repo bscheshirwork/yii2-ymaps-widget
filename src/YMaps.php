@@ -216,8 +216,8 @@ JS;
             $this->_connection = $connectionConfig;
         } elseif (
             is_string($connectionConfig) &&
-            $app->hasModule($connectionConfig) &&
-            ($connection = $app->getModule($connectionConfig)) instanceof Connection
+            Yii::$app->hasModule($connectionConfig) &&
+            ($connection = Yii::$app->getModule($connectionConfig)) instanceof Connection
         ) {
             $this->_connection = $connection;
         } elseif (is_array($connectionConfig)) {
