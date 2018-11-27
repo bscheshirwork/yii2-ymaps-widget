@@ -12,17 +12,56 @@ use yii\web\View;
  * Class YMaps
  * @package bscheshirwork\ymaps
  *
- * Inject canvas for map. You can use this canvas in your js.
+ * Simple: Inject canvas for map. In view:
  * Inject code for generate map (optional, default).
+ *
  *     <?= \bscheshirwork\ymaps\YMaps::widget([
  *         'htmlOptions' => [
  *             'style' => 'height: 400px;',
  *         ],
  *     ]); ?>
  *
- * Inject js vars for external js file (optional).
+ * The <div id='map' style='height: 400px;' ></div> will be generated;
+ * The yandex maps will be initialized and assign to this canvas.
  *
+ * Advanced: Inject js vars for external js file (optional).
+ * In view:
  *
+ *     <?= $form->field($model, 'latitude')->textInput(['maxlength' => true]) ?>
+ *
+ *     <?= $form->field($model, 'longitude')->textInput(['maxlength' => true]) ?>
+ *
+ *     <?= \bscheshirwork\ymaps\YMaps::widget([
+ *         'htmlOptions' => [
+ *             'style' => 'height: 400px;',
+ *         ],
+ *         'mapState' => [
+ *             'center' => [$model->latitude ?: 55.7372, $model->longitude ?: 37.6066],
+ *             'zoom' => 9,
+ *         ],
+ *         'simpleMap' => false,
+ *         'jsVars' => true,
+ *     ]); ?>
+ *
+ * The <div id='map' style='height: 400px;' ></div> will be generated.
+ *
+ * In js:
+ * ymaps.ready(init);
+ *
+ * function init() {
+ *     var myPlacemark,
+ *         myMap = mapBuilder(mapId, mapState, mapOptions);
+ *     myMap.events.add('click', function (e) {
+ *         var coords = e.get('coords');
+ *         myPlacemark = new ymaps.Placemark(coords, {
+ *             iconCaption: 'caption'
+ *         }, {
+ *             preset: 'islands#violetDotIconWithCaption',
+ *             draggable: true
+ *         });
+ *         myMap.geoObjects.add(myPlacemark);
+ *     });
+ * }
  */
 class YMaps extends Widget
 {
