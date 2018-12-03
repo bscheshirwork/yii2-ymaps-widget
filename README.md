@@ -96,7 +96,7 @@ In view:
     ]); ?>
 ```
 
-The <div id='map' style='height: 400px;' ></div> will be generated. The JS vars will be generated and inserting into `POS_HEAD` position
+The <div id='map' style='height: 400px;' ></div> will be generated. The JS builders will be generated and inserting into `POS_HEAD` position
 
 In js:
 ```js
@@ -104,7 +104,7 @@ ymaps.ready(init);
 
 function init() {
     var myPlacemark,
-        myMap = mapBuilder(mapId, mapState, mapOptions);
+        myMap = mapBuilder(mapId(), mapState(), mapOptions());
     myMap.events.add('click', function (e) {
         var coords = e.get('coords');
         myPlacemark = new ymaps.Placemark(coords, {

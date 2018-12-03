@@ -145,7 +145,7 @@ class YMaps extends Widget
     public $jsVars = false;
 
     /**
-     * @var array The map of js vars. Key is marker value is name of insertiong var.
+     * @var array The map of js builders vars. Key is marker value is name of insertiong var.
      * For use multiple widget on same page
      * [
      *     'map' => 'myMap',
@@ -170,7 +170,7 @@ class YMaps extends Widget
     protected $_mapParams;
 
     /**
-     * Configure necessarry params
+     * Configure necessary params
      * @return array
      */
     protected function prepareMapParams()
@@ -186,12 +186,12 @@ class YMaps extends Widget
     }
 
     /**
-     * Registers a specific js vars `mapState`, `mapOptions` and `mapBuilder`
+     * Registers a specific builder vars `mapState`, `mapOptions` and `mapBuilder`
      * Example of usage in external js (like a asset):
      * ymaps.ready(init);
      * function init() {
      *     var myPlacemark,
-     *         myMap = mapBuilder(mapId, mapState, mapOptions);
+     *         myMap = mapBuilder(mapId(), mapState(), mapOptions());
      *     myMap.events.add('click', function (e) {
      *         var coords = e.get('coords');
      *         //...
@@ -206,9 +206,9 @@ class YMaps extends Widget
         $varOptions = $this->jsVarNameList['mapOptions'] ?? 'mapOptions';
         $varBuilder = $this->jsVarNameList['mapBuilder'] ?? 'mapBuilder';
         $js = <<<JS
-var $varId = '$mapId', 
-    $varState = $mapState, 
-    $varOptions = $mapOptions, 
+var $varId = function() {return '$mapId';}, 
+    $varState = function() {return $mapState;}, 
+    $varOptions = function() {return $mapOptions;}, 
     $varBuilder = function(id, state, options) {
         return new ymaps.Map(id, state, options);
     };
@@ -224,9 +224,10 @@ JS;
         ['id' => $mapId, 'state' => $mapState, 'options' => $mapOptions] = $this->prepareMapParams();
         $varMap = $this->jsVarNameList['map'] ?? 'myMap';
         $js = <<<JS
+var $varMap;
 ymaps.ready(init);
 function init() {
-    var $varMap = new ymaps.Map('$mapId', $mapState, $mapOptions);
+    $varMap = new ymaps.Map('$mapId', $mapState, $mapOptions);
 };
 JS;
         $this->getView()->registerJs($js);
