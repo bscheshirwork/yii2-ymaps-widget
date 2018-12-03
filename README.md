@@ -120,6 +120,38 @@ function init() {
 }
 ```
 
+#### Select a controls
+
+```php
+    <?= \bscheshirwork\ymaps\YMaps::widget([
+        'htmlOptions' => [
+            'style' => 'height: 400px;',
+        ],
+        'mapState' => [
+            'center' => [
+                $model->latitude ?? false ?: Yii::$app->params['map']['default']['latitude'],
+                $model->longitude ?? false ?: Yii::$app->params['map']['default']['longitude'],
+            ],
+            'zoom' => $model->zoom ?? false ?: Yii::$app->params['map']['default']['zoom'],
+            'controls' => [
+                'zoomControl', 'searchControl', 'typeSelector', 'fullscreenControl', 'routeButtonControl',
+/*
+                new \yii\web\JsExpression('new ymaps.control.ZoomControl({options: {size: "small"}})'),
+                new \yii\web\JsExpression('new ymaps.control.SearchControl({options: {size: "small"}})'),
+                new \yii\web\JsExpression('new ymaps.control.TrafficControl({options: {size: "small"}})'),
+                new \yii\web\JsExpression('new ymaps.control.GeolocationControl({options: {size: "small"}})'),
+                new \yii\web\JsExpression('new ymaps.control.FullscreenControl({options: {size: "small"}})'),
+                new \yii\web\JsExpression('new ymaps.control.RouteEditor({options: {size: "small"}})'),
+*/
+            ],
+        ],
+        'mapOptions' => [
+        ],
+        'simpleMap' => false,
+        'jsVars' => true,
+    ]); ?>
+```
+
 All rights reserved.
  
 2018 © bscheshir.work@gmail.com
