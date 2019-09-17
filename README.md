@@ -33,7 +33,7 @@ return [
 Second: use this component in widget `connection` param 
 ```php
 <?= \bscheshirwork\ymaps\YMaps::widget([
-    'connection' => 'ymaps',
+    'connection' => Yii::$app->ymaps,
     'mapState' => [
         'center' => [55.7372, 37.6066],
         'zoom' => 9,
